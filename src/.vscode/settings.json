@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/jonahschwartzman/Downloads/computerScience/Personal/Java/BallGame/lib/stdlib-package.jar"
+    ]
+}
