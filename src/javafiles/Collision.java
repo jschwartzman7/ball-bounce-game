@@ -1,8 +1,7 @@
+package javafiles;
+
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Collision{

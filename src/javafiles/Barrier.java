@@ -1,10 +1,7 @@
+package javafiles;
+
 import edu.princeton.cs.introcs.StdDraw;
-import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.HashMap;
 
 // Calculate centroid which, for convex polygons, is on the correct side of each line formed
 // by the sides of the polygon.  Compare which side the centroid is on to which side the point

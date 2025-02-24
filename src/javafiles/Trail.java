@@ -1,10 +1,7 @@
+package javafiles;
+
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.HashMap;
 
 public class Trail {
     public static int trailLength = 100;

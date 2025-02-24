@@ -1,9 +1,6 @@
-import edu.princeton.cs.introcs.StdDraw;
-import java.awt.Color;
-import java.awt.event.KeyEvent;
+package javafiles;
+
 import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.HashMap;
 
 public class LevelBarriers{

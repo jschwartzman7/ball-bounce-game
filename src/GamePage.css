@@ -1,0 +1,11 @@
+body{
+    color:rgb(232, 231, 231);
+    background-color: #4e6a6c;
+}
+
+#gameCanvas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #42365d;
+}
