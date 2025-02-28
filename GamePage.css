@@ -1,11 +1,18 @@
 body{
     color:rgb(232, 231, 231);
-    background-color: #4e6a6c;
+    display:grid;
+    justify-items: center;
 }
 
 #gameCanvas{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #42365d;
+}
+.menuButton{
+    color: #f0f0f0;
+    background-color: #4d6590;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+    margin: 5px;
+    width:min-content;
+    cursor: pointer;
+    display: inline-flex;
 }

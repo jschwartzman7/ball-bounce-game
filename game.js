@@ -1,53 +1,90 @@
-const ctx = canvas.getContext('2d');
+document.getElementById("selectLevel").addEventListener("click", function(){
+    if(document.getElementById("levelsMenu").style.display == "block"){
+        document.getElementById("levelsMenu").style.display = "none";
+    }
+    else{
+        document.getElementById("levelsMenu").style.display = "block";
+    }
 
-function update() {
-    updateBallInCanvas();
-}
+});
+document.getElementById("settings").addEventListener("click", function(){
+    if(document.getElementById("settingsMenu").style.display == "block"){
+        document.getElementById("settingsMenu").style.display = "none";
+    }
+    else{
+        document.getElementById("settingsMenu").style.display = "block";
+    }
+});
+document.getElementById("helpPage").addEventListener("click", function(){
+    if(document.getElementById("helpMenu").style.display == "block"){
+        document.getElementById("helpMenu").style.display = "none";
+    }
+    else{
+        document.getElementById("helpMenu").style.display = "block";
+    }
+});
+
 
 function updateBallInCanvas(){
-    let nextX = ball.x + ball.dx;
-    let nextY = ball.y + ball.dy;
+    let nextX = ball.x + ball.xVelo;
+    let nextY = ball.y + ball.yVelo;
     if(nextX - ball.radius < 0 || nextX + ball.radius > canvas.width){
-        ball.dx *= -1;
+        ball.xVelo *= -1;
     }
     if(nextY - ball.radius < 0 || nextY + ball.radius > canvas.height){
-        ball.dy *= -1;
+        ball.yVelo *= -1;
     }
-    ball.x += ball.dx;
-    ball.y += ball.dy;
+    ball.x += ball.xVelo;
+    ball.y += ball.yVelo;
 }
 
-function drawGun(){
-    ctx.fillStyle = gun.color;
-    ctx.beginPath();
-    ctx.arc(gun.x, gun.y, gun.radius, 0, 2 * Math.PI);
-    ctx.fill();
-    if(gun.placed){
-        ctx.beginPath();
-        ctx.moveTo(gun.x, gun.y);
-        ctx.lineTo(gun.x + gun.aimLength * Math.cos(gun.aimDirection), gun.y + gun.aimLength * Math.sin(gun.aimDirection));
-        ctx.stroke();
-    }
-}
-function drawBall(){
-    if(ball.fired){
-        console.log("draw ball");
-        ctx.fillStyle = ball.color;
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
-        ctx.fill();
+function checkBarrierCollisions(){
+    for(let i = 0; i < stageBarriers[currentStage].length; i++){
+        let currentBarrier = stageBarriers[currentStage][i];
+        let collisionStatus = currentBarrier.collidingWith([ball.x, ball.y], ball.radius);
+        if(collisionStatus == Number.MAX_VALUE){
+            ball.xVelo *= -1;
+        }
+        else if(collisionStatus == 0){
+            ball.yVelo *= -1;
+        }
+        else{
+            console.log("collision", collisionStatus)
+            let angleOfIncidence = Math.atan2(ball.yVelo, ball.xVelo) - collisionStatus;
+            let newAngle = Math.atan2(ball.yVelo, ball.xVelo) + Math.PI - 2*angleOfIncidence;
+            ball.xVelo = ball.speed * Math.cos(angleOfIncidence);
+            ball.yVelo = ball.speed * Math.sin(angleOfIncidence);
+        }
     }
 }
 
-function draw() {
+function checkLevelStatus(){
+    for(let i = 0; i < stageBarriers[currentStage].length; i++){
+        let currentBarrier = stageBarriers[currentStage][i];
+        if(currentBarrier.touched == false){
+            return false
+        }
+    }
+    return true;
+}
+
+
+function updateGame() {
+    updateBallInCanvas();
+    gun.updateScaleFactors();
+    checkBarrierCollisions();
+}
+
+function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawGun();
-    drawBall();
+    gun.draw();
+    ball.draw();
+    drawBarriers(currentStage);
 }
 
 function gameLoop() {
-    update();
-    draw();
+    updateGame();
+    drawGame();
     requestAnimationFrame(gameLoop);
 }
 
