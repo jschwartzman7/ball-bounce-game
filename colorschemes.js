@@ -15,10 +15,8 @@ colorSchemes["Blue"] = new ColorScheme("black", "blue", "white", "red", "red");
 
 let colorScheme = "Default";
 
-document.getElementById("colorSchemeSelect").addEventListener("change", setColorScheme);
-function setColorScheme(){
-    colorScheme = document.getElementById("colorSchemeSelect").value;
-    document.body.style.backgroundColor = colorSchemes[colorScheme].bodyColor;
-    document.getElementById("gameCanvas").style.backgroundColor = colorSchemes[colorScheme].backgroundColor;
+function setColorScheme(key){
+    document.body.style.backgroundColor = colorSchemes[key].bodyColor;
+    document.getElementById("gameCanvas").style.backgroundColor = colorSchemes[key].backgroundColor;
 }
-setColorScheme();
+setColorScheme("Default");

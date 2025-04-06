@@ -1,3 +1,5 @@
+let currentStage = 1;
+
 class PolygonBarrier{
     constructor(xCords, yCords){
         this.xCords = xCords;
@@ -32,6 +34,8 @@ class PolygonBarrier{
         *  x(m^2 + 1) = m^2x1 - my1 + mpoint[1] + point[0]
         *  x = (m(mx1 - y1 + point[1]) + point[0])/(m^2 + 1);
         */
+        let closestIntersection = Number.MAX_VALUE;
+        let returnAngle = 0;
         for(let vertexIdx = 0; vertexIdx < this.xCords.length; vertexIdx++){
             let nextIndex = (vertexIdx + 1) % this.xCords.length;
             let x1 = this.xCords[vertexIdx];
@@ -46,7 +50,11 @@ class PolygonBarrier{
                     continue;
                 }
                 this.touched = true;
-                return Number.MAX_VALUE;
+                if(Math.abs(point[0] - x1) < closestIntersection){
+                    closestIntersection = Math.abs(point[0] - x1);
+                    returnAngle = Math.PI/2;
+                    continue;
+                }
             }
             // zero slope
             if(y1 == y2){
@@ -56,7 +64,11 @@ class PolygonBarrier{
                     continue;
                 }
                 this.touched = true;
-                return 0;
+                if(Math.abs(point[1] - y1) < closestIntersection){
+                    closestIntersection = Math.abs(point[1] - y1);
+                    returnAngle = 0;
+                    continue;
+                }
             }
             // nonzero noninfinite slope
             let minX = Math.min(x1, x2);
@@ -68,21 +80,22 @@ class PolygonBarrier{
             }
             let m = (y2 - y1)/(x2 - x1);
             let b2 = point[1] + point[0]/m;
-            //let xEdgeClosest = (m*(point[1]+x2-y2)+point[0])/(m*m+1); 
             let xEdgeClosest = (m*(m*x1 - y1 + point[1]) + point[0])/(m*m + 1);
-            /*if(xEdgeClosest+radius < minX || xEdgeClosest-radius > maxX){
-                continue;
-            }*/
             let yEdgeClosest = -xEdgeClosest/m + b2;
-            /*if(yEdgeClosest+radius < minY || yEdgeClosest-radius > maxY){
-                continue;
-            }*/
-            if(Math.hypot(Math.abs(point[0]-xEdgeClosest), Math.abs(point[1]-yEdgeClosest)) <= radius){
+            let distance = Math.hypot(Math.abs(point[0]-xEdgeClosest), Math.abs(point[1]-yEdgeClosest))
+            if(distance <= radius){
                 this.touched = true;
-                return Math.atan(y2-y1, x2-x1);
+                if(distance < closestIntersection){
+                    closestIntersection = distance;
+                    returnAngle = Math.atan(y2-y1, x2-x1);
+                    continue;
+                }
             }
         }
-        return null;
+        if(closestIntersection == Number.MAX_VALUE){
+            return null;
+        }
+        return returnAngle;
     }
 }
 
@@ -102,15 +115,29 @@ const stage2Barriers = []
 stage2Barriers.push(new PolygonBarrier([100, 100, 400, 400], [250, 400, 400, 250]));
 stage2Barriers.push(new PolygonBarrier([250, 300, 320, 260], [130, 120, 300, 360]));
 
-let currentStage = 1;
+const stage3Barriers = []
+stage3Barriers.push(new PolygonBarrier([100, 50, 50, 100], [0, 0, 150, 150]));
+stage3Barriers.push(new PolygonBarrier([280, 230, 230, 280], [50, 50, 200, 200]));
+stage3Barriers.push(new PolygonBarrier([100, 50, 50, 100], [200, 200, 350, 350]));
+stage3Barriers.push(new PolygonBarrier([280, 230, 230, 280], [250, 250, 400, 400]));
+stage3Barriers.push(new PolygonBarrier([100, 50, 50, 100], [400, 400, 550, 550]));
 
 const stageBarriers = {
     1: stage1Barriers,
-    2: stage2Barriers
+    2: stage2Barriers,
+    3: stage3Barriers
 }
 
-document.getElementById("levelSelect").addEventListener("change", setCurrentLevel);
-function setCurrentLevel(){
-    currentStage = document.getElementById("levelSelect").value;
+
+function setCurrentLevel(levelNumber){
+    currentStage = levelNumber;
 }
-setCurrentLevel();
+
+function resetBarriers(levelNumber){
+    for(let i = 0; i < stageBarriers[levelNumber].length; i++){
+        stageBarriers[levelNumber][i].touched = false;
+    }
+    resetLevel = false;
+}
+
+setCurrentLevel(1);

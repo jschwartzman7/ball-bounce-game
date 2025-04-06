@@ -1,18 +1,26 @@
+:root{
+    --background-color: #4d6590;
+    --text-color: rgb(232, 231, 231);
+    --primary-color: #4d6590;
+}
 body{
-    color:rgb(232, 231, 231);
-    display:grid;
+    color: var(--text-color);
+    display: block;
     justify-items: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
 }
-
-#gameCanvas{
+#menuContainer{
+    display: grid;
+    justify-items: center;
+    margin:10px;
 }
-.menuButton{
-    color: #f0f0f0;
-    background-color: #4d6590;
-    border: 1px solid #f0f0f0;
+.container{
+    margin:6px;
+    font-size: 20px;
+}
+button{
+    color: var(--text-color);
+    background-color: var(--background-color);
+    border: 1px solid var(--text-color);
     border-radius: 5px;
-    margin: 5px;
-    width:min-content;
-    cursor: pointer;
-    display: inline-flex;
 }

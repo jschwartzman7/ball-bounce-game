@@ -10,29 +10,17 @@
     <h1>Bounce Game</h1>
     <h2>By Jonah Schwartzman</h2>
     <div id="gameContainer">
-        <div id="gameMenu">
-            <div class="menuButton" id="selectLevel">Levels
+        <div id="menuContainer">
+            <div id="levels" class="container">Select Level
+                <button onclick="javascript:setCurrentLevel(value)" value="1">Level 1</button>
+                <button onclick="javascript:setCurrentLevel(value)" value="2">Level 2</button>
+                <button onclick="javascript:setCurrentLevel(value)" value="3">Level 3</button>
             </div>
-            <div class="menuButton" id="settings">Options
+            <div id="settings" class="container">Color Scheme
+                <button onclick="javascript:setColorScheme(value)" value="Default">Default</button>
+                <button onclick="javascript:setColorScheme(value)" value="Dark">Dark</button>
+                <button onclick="javascript:setColorScheme(value)" value="Blue">Blue</button>
             </div>
-            <div class="menuButton" id="helpPage">Help
-            </div>
-        </div>
-        <div id="levelsMenu" style="display: none;">
-            <select id="levelSelect">
-                <option value="1">Level 1</option>
-                <option value="2">Level 2</option>
-            </select>
-        </div>
-        <div id="settingsMenu" style="display: none;">Color Scheme
-            <select id="colorSchemeSelect">
-                <option value="Default">Default</option>
-                <option value="Dark">Dark</option>
-                <option value="Blue">Blue</option>
-            </select>
-        </div>
-        <div id="helpMenu" style="display: none;">
-            <p>I can't give you any help</p>
         </div>
         <canvas id="gameCanvas" width="600" height="600"></canvas>
     </div>
